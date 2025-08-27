@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -93,7 +94,7 @@ class QuestionApplicationTests {
     }
 
     @Test
-    @DisplayName("답변 데이터 생성")
+    @DisplayName("답변 데이터 생성 - repository 버전")
     void t8() {
         Question question = this.questionRepository.findById(2).get();
 
@@ -104,5 +105,18 @@ class QuestionApplicationTests {
 
         a.setCreateDate(LocalDateTime.now());
         this.answerRepository.save(a);
+    }
+
+    @Test
+    @DisplayName("답변 데이터 생성 - OneToMany 버전")
+    @Transactional
+    void t9() {
+        Question question2 = this.questionRepository.findById(2).get();
+        int beforeSize = question2.getAnswers().size();
+
+       question2.addAnswer("네 자동으로 생성됩니다.");
+
+        int afterSize=question2.getAnswers().size();
+        assertEquals(beforeSize+1, afterSize);
     }
 }
