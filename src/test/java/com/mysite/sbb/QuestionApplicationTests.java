@@ -39,4 +39,11 @@ class QuestionApplicationTests {
         }
     }
 
+    @Test
+    @DisplayName("findBySubject")
+    void t3() {
+        Question q = this.questionRepository.findBySubject("sbb가 무엇인가요?").get();
+        assertEquals(1, q.getId());
+    }
+
 }
