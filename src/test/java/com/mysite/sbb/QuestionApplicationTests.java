@@ -1,5 +1,9 @@
 package com.mysite.sbb;
 
+import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.answer.AnswerRepository;
+import com.mysite.sbb.question.Question;
+import com.mysite.sbb.question.QuestionRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,6 +130,7 @@ class QuestionApplicationTests {
     @Test
     @DisplayName("2번 질문의 답글 조회")
     @Transactional
+    //Transactional 안붙이면 lazy 에러 발생
     void t10() {
         Question q2 = questionRepository.findById(2).get();
 
