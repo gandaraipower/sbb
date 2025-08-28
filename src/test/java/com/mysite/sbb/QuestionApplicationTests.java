@@ -125,8 +125,10 @@ class QuestionApplicationTests {
 
     @Test
     @DisplayName("2번 질문의 답글 조회")
+    @Transactional
     void t10() {
         Question q2 = questionRepository.findById(2).get();
+
         Answer answer=q2.getAnswers().get(0);
 
         System.out.println("answer = " + answer.getContent());
