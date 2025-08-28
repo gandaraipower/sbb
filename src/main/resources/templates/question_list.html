@@ -6,14 +6,25 @@
 </head>
 <body>
 
-<div>
-    [[${value}]]
-</div>
-<div th:text="${홍길동}">
-
-</div>
 <ul>
-    <li th:each="num : ${list}" th:text="${num}"></li>
+    <li th:each="question : ${questionsList}" th:text="${question.content}"></li>
 </ul>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성일시</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="question : ${questionsList}">
+        <td th:text="${question.id}"></td>
+        <td th:text="${question.subject}"></td>
+        <td th:text="${question.createDate}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
