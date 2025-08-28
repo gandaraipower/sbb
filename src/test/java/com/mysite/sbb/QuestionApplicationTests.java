@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,7 @@ class QuestionApplicationTests {
     void t2() {
         Optional<Question> oq = this.questionRepository.findById(1);
 
-        if(oq.isPresent()) {
+        if (oq.isPresent()) {
             Question q = oq.get();
             assertEquals("sbb가 무엇인가요?", q.getSubject());
         }
@@ -67,7 +68,7 @@ class QuestionApplicationTests {
         Question q = qList.get(0);
         assertEquals("sbb가 무엇인가요?", q.getSubject());
     }
-    
+
     @Test
     @DisplayName("데이터 수정")
     void t6() {
@@ -110,13 +111,14 @@ class QuestionApplicationTests {
     @Test
     @DisplayName("답변 데이터 생성 - OneToMany 버전")
     @Transactional
+    @Rollback(false)
     void t9() {
         Question question2 = this.questionRepository.findById(2).get();
         int beforeSize = question2.getAnswers().size();
 
-       question2.addAnswer("네 자동으로 생성됩니다.");
+        question2.addAnswer("네 자동으로 생성됩니다.");
 
-        int afterSize=question2.getAnswers().size();
-        assertEquals(beforeSize+1, afterSize);
+        int afterSize = question2.getAnswers().size();
+        assertEquals(beforeSize + 1, afterSize);
     }
 }
